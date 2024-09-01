@@ -1,0 +1,23 @@
+{
+  "name": "monitoria-backend-es-2024-1",
+  "version": "1.0.0",
+  "description": "Projeto desafio da monitoria de backend da disciplina de Engenharia de Software (ES) no período letivo de 2024.1 do curso de Sistemas de Informação (SI) da Universidade Federal de Pernambuco (UFPE).",
+  "engines": {
+    "node": ">=20.17.0",
+    "npm": ">=10.8.2"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isaquetdiniz/monitoria-backend-es-2024-1.git"
+  },
+  "author": "itd@cin.ufpe.br",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/isaquetdiniz/monitoria-backend-es-2024-1/issues"
+  },
+  "homepage": "https://github.com/isaquetdiniz/monitoria-backend-es-2024-1#readme"
+}
