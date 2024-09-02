@@ -17,6 +17,16 @@ export class Book {
 			...params,
 		});
 	}
+
+	toJSON() {
+		return {
+			...this.props,
+			title: this.props.title.value,
+			author: this.props.author.value,
+			genre: this.props.genre.value,
+			publishYear: this.props.publishYear.value,
+		};
+	}
 }
 
 export type BookProps = {

@@ -4,7 +4,7 @@ export abstract class ValueObject {
 	}
 
 	get value() {
-		return this.props.value;
+		return this.props;
 	}
 
 	abstract validate(props);

@@ -176,6 +176,7 @@ export class BooksListDTO {
 	@ApiProperty({
 		description: "The books list",
 		isArray: true,
+		type: BookDTO,
 	})
 	data: BookDTO[];
 }
@@ -203,7 +204,8 @@ export class BookController {
 	})
 	@Post()
 	async createBook(@Body() body: CreateBookBody) {
-		return this.bookService.createBook();
+		console.log(body);
+		return this.bookService.createBook(body);
 	}
 
 	@ApiOperation({
@@ -223,8 +225,10 @@ export class BookController {
 			"If was not possible process the request because of some wrong information.",
 	})
 	@Get()
-	getBooks(@Query() query: GetBooksQuery) {
-		return this.bookService.getBooks();
+	async getBooks(@Query() query: GetBooksQuery) {
+		const books = await this.bookService.getBooks(query);
+
+		return { data: books };
 	}
 
 	@ApiOperation({
@@ -245,7 +249,7 @@ export class BookController {
 	})
 	@Get(":id")
 	getBookById(@Param() params: GetBookByIdParams) {
-		return this.bookService.getBook();
+		return this.bookService.getBook(params.id);
 	}
 
 	@ApiOperation({
@@ -266,7 +270,7 @@ export class BookController {
 	})
 	@Patch(":id")
 	updateBook(@Param() params: GetBookByIdParams, @Body() body: UpdateBookBody) {
-		return this.bookService.updateBook();
+		return this.bookService.updateBook(params.id, body);
 	}
 
 	@ApiOperation({
@@ -287,6 +291,6 @@ export class BookController {
 	})
 	@Delete(":id")
 	deleteBook(@Param() params: GetBookByIdParams) {
-		return this.bookService.deleteBook();
+		return this.bookService.deleteBook(params.id);
 	}
 }

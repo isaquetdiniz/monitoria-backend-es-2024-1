@@ -3,7 +3,7 @@ import { isString, length } from "class-validator";
 
 export class Title extends ValueObject {
 	private constructor(name: string) {
-		super({ value: name });
+		super(name);
 	}
 
 	static create(name: string) {

@@ -3,7 +3,7 @@ import { isInt, min } from "class-validator";
 
 export class Year extends ValueObject {
 	private constructor(value: number) {
-		super({ value });
+		super(value);
 	}
 
 	static create(value: number) {
