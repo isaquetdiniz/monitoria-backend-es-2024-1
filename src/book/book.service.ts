@@ -1,5 +1,5 @@
 import { DrizzleBookRepository } from "@/libs/drizzle";
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Author } from "./domain/author";
 import { Book } from "./domain/book";
 import { Genre } from "./domain/genre";
@@ -40,7 +40,7 @@ export class BookService {
 		const book = await this.bookRepository.getById(id);
 
 		if (!book) {
-			throw new Error("Book not found");
+			throw new NotFoundException("Book not found");
 		}
 
 		return this.bookRepository.update(id, params);
@@ -50,7 +50,7 @@ export class BookService {
 		const book = await this.bookRepository.getById(id);
 
 		if (!book) {
-			throw new Error("Book not found");
+			throw new NotFoundException("Book not found");
 		}
 
 		await this.bookRepository.deleteById(id);

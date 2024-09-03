@@ -1,3 +1,4 @@
+import { DomainError } from "@/core/errors";
 import { ValueObject } from "@/core/value-object";
 import { isInt, min } from "class-validator";
 
@@ -12,15 +13,15 @@ export class Year extends ValueObject {
 
 	validate(value: number) {
 		if (!value) {
-			throw new Error("Year is required");
+			throw new DomainError("Year is required");
 		}
 
 		if (!isInt(value)) {
-			throw new Error("Year must to be an integer");
+			throw new DomainError("Year must to be an integer");
 		}
 
 		if (!min(value, 0)) {
-			throw new Error("Year must to be biggest or equal 0");
+			throw new DomainError("Year must to be biggest or equal 0");
 		}
 	}
 }

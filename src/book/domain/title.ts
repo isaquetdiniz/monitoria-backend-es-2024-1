@@ -1,3 +1,4 @@
+import { DomainError } from "@/core/errors";
 import { ValueObject } from "@/core/value-object";
 import { isString, length } from "class-validator";
 
@@ -12,15 +13,15 @@ export class Title extends ValueObject {
 
 	validate(name: string) {
 		if (!name) {
-			throw new Error("Title is required");
+			throw new DomainError("Title is required");
 		}
 
 		if (!isString(name)) {
-			throw new Error("Title must to be a string");
+			throw new DomainError("Title must to be a string");
 		}
 
 		if (!length(name, 1, 255)) {
-			throw new Error("Title must have at least 1 char and 255 in max");
+			throw new DomainError("Title must have at least 1 char and 255 in max");
 		}
 	}
 }

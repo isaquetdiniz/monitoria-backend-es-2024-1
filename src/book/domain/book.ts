@@ -1,4 +1,5 @@
 import { randomUUID as uuidV4 } from "node:crypto";
+import { DomainError } from "@/core/errors";
 import type { Author } from "./author";
 import type { Genre } from "./genre";
 import type { Title } from "./title";
@@ -28,7 +29,9 @@ export class Book {
 
 	private validate() {
 		if (this.props.publishYear.value > new Date().getFullYear()) {
-			throw new Error("Not is possible create a book with future publishYear");
+			throw new DomainError(
+				"Not is possible create a book with future publishYear",
+			);
 		}
 	}
 

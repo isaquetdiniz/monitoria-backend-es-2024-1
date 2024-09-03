@@ -1,3 +1,4 @@
+import { DefaultErrorFilter } from "@/libs/nest";
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { BookModule } from "./book";
@@ -8,9 +9,10 @@ async function bootstrap() {
 
 	openapi(app);
 
-	app.enableShutdownHooks();
-
+	app.useGlobalFilters(new DefaultErrorFilter());
 	app.useGlobalPipes(new ValidationPipe({ transform: true }));
+
+	app.enableShutdownHooks();
 
 	await app.listen(3000);
 }
