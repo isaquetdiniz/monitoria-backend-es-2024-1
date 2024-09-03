@@ -1,15 +1,11 @@
 import { DrizzleBookRepository } from "@/libs/drizzle";
 import { Injectable } from "@nestjs/common";
-import type {
-	CreateBookBody,
-	GetBooksQuery,
-	UpdateBookBody,
-} from "./book.controller";
 import { Author } from "./domain/author";
 import { Book } from "./domain/book";
 import { Genre } from "./domain/genre";
 import { Title } from "./domain/title";
 import { Year } from "./domain/year";
+import type { CreateBookBody, GetBooksQuery, UpdateBookBody } from "./dtos";
 
 @Injectable()
 export class BookService {

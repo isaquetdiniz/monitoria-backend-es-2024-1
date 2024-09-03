@@ -1,9 +1,9 @@
-import { UpdateBookBody } from "@/book/book.controller";
 import { Author } from "@/book/domain/author";
 import { Book } from "@/book/domain/book";
 import { Genre } from "@/book/domain/genre";
 import { Title } from "@/book/domain/title";
 import { Year } from "@/book/domain/year";
+import type { UpdateBookBody } from "@/book/dtos";
 import { Injectable } from "@nestjs/common";
 import Database from "better-sqlite3";
 import { eq } from "drizzle-orm";
