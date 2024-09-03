@@ -1,6 +1,10 @@
 import { DomainError } from "@/core/errors";
-import { ArgumentsHost, Catch, ExceptionFilter } from "@nestjs/common";
-import { Response } from "express";
+import {
+	type ArgumentsHost,
+	Catch,
+	type ExceptionFilter,
+} from "@nestjs/common";
+import type { Response } from "express";
 
 @Catch(DomainError)
 export class DefaultErrorFilter implements ExceptionFilter<DomainError> {
