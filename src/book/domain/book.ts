@@ -8,14 +8,28 @@ export class Book {
 	private constructor(private readonly props: BookProps) {}
 
 	static create(params: CreateBookParams) {
-		if (params.publishYear.value > new Date().getFullYear()) {
-			throw new Error("Not is possible create a book with future publishYear");
-		}
-
-		return new Book({
+		const book = new Book({
 			id: uuidV4(),
 			...params,
 		});
+
+		book.validate();
+
+		return book;
+	}
+
+	static restore(params: RestoreBookParams) {
+		const book = new Book(params);
+
+		book.validate();
+
+		return book;
+	}
+
+	private validate() {
+		if (this.props.publishYear.value > new Date().getFullYear()) {
+			throw new Error("Not is possible create a book with future publishYear");
+		}
 	}
 
 	toJSON() {
@@ -39,3 +53,5 @@ export type BookProps = {
 };
 
 export type CreateBookParams = Omit<BookProps, "id">;
+
+export type RestoreBookParams = BookProps;

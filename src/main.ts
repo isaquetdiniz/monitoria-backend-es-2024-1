@@ -1,3 +1,4 @@
+import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { BookModule } from "./book";
 import { openapi } from "./libs/swagger";
@@ -8,6 +9,8 @@ async function bootstrap() {
 	openapi(app);
 
 	app.enableShutdownHooks();
+
+	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
 	await app.listen(3000);
 }

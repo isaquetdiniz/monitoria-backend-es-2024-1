@@ -32,23 +32,25 @@ export class BookService {
 		return this.bookRepository.createBook(book);
 	}
 
-	getBooks(params: GetBooksQuery) {
+	async getBooks(params: GetBooksQuery): Promise<Book[]> {
 		return this.bookRepository.getAllByFilter(params);
 	}
 
-	getBook(id: string) {
+	async getBook(id: string): Promise<Book | null> {
 		return this.bookRepository.getById(id);
 	}
 
-	async updateBook(id: string, params: UpdateBookBody) {
+	async updateBook(id: string, params: UpdateBookBody): Promise<Book> {
 		const book = await this.bookRepository.getById(id);
 
 		if (!book) {
 			throw new Error("Book not found");
 		}
+
+		return this.bookRepository.update(id, params);
 	}
 
-	async deleteBook(id: string) {
+	async deleteBook(id: string): Promise<Book> {
 		const book = await this.bookRepository.getById(id);
 
 		if (!book) {

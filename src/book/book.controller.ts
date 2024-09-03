@@ -172,6 +172,13 @@ export class BookDTO {
 	quantity: number;
 }
 
+export class BookDetailDTO {
+	@ApiProperty({
+		description: "The books details",
+	})
+	data: BookDTO;
+}
+
 export class BooksListDTO {
 	@ApiProperty({
 		description: "The books list",
@@ -192,7 +199,7 @@ export class BookController {
 	})
 	@ApiOkResponse({
 		description: "The book created successfully.",
-		type: BookDTO,
+		type: BookDetailDTO,
 	})
 	@ApiBadRequestResponse({
 		description:
@@ -204,8 +211,11 @@ export class BookController {
 	})
 	@Post()
 	async createBook(@Body() body: CreateBookBody) {
-		console.log(body);
-		return this.bookService.createBook(body);
+		const book = await this.bookService.createBook(body);
+
+		return {
+			data: book,
+		};
 	}
 
 	@ApiOperation({
@@ -237,7 +247,7 @@ export class BookController {
 	})
 	@ApiOkResponse({
 		description: "The book returned successfully.",
-		type: BookDTO,
+		type: BookDetailDTO,
 	})
 	@ApiBadRequestResponse({
 		description:
@@ -248,8 +258,12 @@ export class BookController {
 			"If was not possible process the request because of some wrong information.",
 	})
 	@Get(":id")
-	getBookById(@Param() params: GetBookByIdParams) {
-		return this.bookService.getBook(params.id);
+	async getBookById(@Param() params: GetBookByIdParams) {
+		const book = await this.bookService.getBook(params.id);
+
+		return {
+			data: book,
+		};
 	}
 
 	@ApiOperation({
@@ -258,7 +272,7 @@ export class BookController {
 	})
 	@ApiOkResponse({
 		description: "The book updated successfully.",
-		type: BookDTO,
+		type: BookDetailDTO,
 	})
 	@ApiBadRequestResponse({
 		description:
@@ -269,8 +283,15 @@ export class BookController {
 			"If was not possible process the request because of some wrong information.",
 	})
 	@Patch(":id")
-	updateBook(@Param() params: GetBookByIdParams, @Body() body: UpdateBookBody) {
-		return this.bookService.updateBook(params.id, body);
+	async updateBook(
+		@Param() params: GetBookByIdParams,
+		@Body() body: UpdateBookBody,
+	) {
+		const book = await this.bookService.updateBook(params.id, body);
+
+		return {
+			data: book,
+		};
 	}
 
 	@ApiOperation({
@@ -279,7 +300,7 @@ export class BookController {
 	})
 	@ApiOkResponse({
 		description: "The book deleted successfully.",
-		type: BookDTO,
+		type: BookDetailDTO,
 	})
 	@ApiBadRequestResponse({
 		description:
@@ -290,7 +311,11 @@ export class BookController {
 			"If was not possible process the request because of some wrong information.",
 	})
 	@Delete(":id")
-	deleteBook(@Param() params: GetBookByIdParams) {
-		return this.bookService.deleteBook(params.id);
+	async deleteBook(@Param() params: GetBookByIdParams) {
+		const book = await this.bookService.deleteBook(params.id);
+
+		return {
+			data: book,
+		};
 	}
 }
