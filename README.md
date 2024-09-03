@@ -1,5 +1,5 @@
 <a href="https://github.com/isaquetdiniz/monitoria-backend-es-2024-1">
-<img align="center" src="https://github.com/user-attachments/assets/f5c2b48c-0faf-4925-b1d5-d73d790424cf" alt="Imagem swagger">
+<img align="center" src="https://github.com/user-attachments/assets/adda8838-16d0-41b4-8656-8ee6510bddf6" alt="Imagem swagger">
 </a>
 
 <h3 align="center">Monitoria Backend ES 2024.1?</h3>
