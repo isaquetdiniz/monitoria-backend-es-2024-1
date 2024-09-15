@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { unlink } from "node:fs/promises";
 import { books } from "@/libs/drizzle/schema";
 import { HttpStatus, type INestApplication } from "@nestjs/common";
@@ -55,7 +56,6 @@ describe("books", async () => {
 
 			const response = await request(app.getHttpServer())
 				.post("/books")
-				.set("Accept", "application/json")
 				.send(requestBody);
 
 			expect(response.status).toBe(HttpStatus.CREATED);
@@ -76,20 +76,50 @@ describe("books", async () => {
 			expect(response.status).toBe(HttpStatus.OK);
 			expect(response.body.data).toHaveLength(3);
 		});
+
+		it("Should get [] if no books", async () => {
+			const response = await request(app.getHttpServer()).get("/books");
+
+			expect(response.status).toBe(HttpStatus.OK);
+			expect(response.body.data).toHaveLength(0);
+		});
 	});
 
 	describe("/GET books/:id", () => {
+		it("Should return 400 if id not is valid", async () => {
+			const response = await request(app.getHttpServer()).get("/books/id");
+
+			expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+		});
+
 		it("Should get book by id successfully", async () => {
 			await insertBookOnDb(DEFAULT_BOOK);
 
-			const response = await request(app.getHttpServer()).get("/books/id");
+			const response = await request(app.getHttpServer()).get(
+				`/books/${DEFAULT_ID}`,
+			);
 
 			expect(response.status).toBe(HttpStatus.OK);
 			expect(response.body).toStrictEqual({ data: DEFAULT_BOOK });
 		});
+
+		it("Should not get if not book", async () => {
+			const response = await request(app.getHttpServer()).get(
+				`/books/${DEFAULT_ID}`,
+			);
+
+			expect(response.status).toBe(HttpStatus.OK);
+			expect(response.body).toStrictEqual({ data: null });
+		});
 	});
 
 	describe("/PATCH books/:id", () => {
+		it("Should return 400 if id not is valid", async () => {
+			const response = await request(app.getHttpServer()).get("/books/id");
+
+			expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+		});
+
 		it("Should update book successfully", async () => {
 			await insertBookOnDb(DEFAULT_BOOK);
 
@@ -98,7 +128,7 @@ describe("books", async () => {
 			};
 
 			const response = await request(app.getHttpServer())
-				.patch("/books/id")
+				.patch(`/books/${DEFAULT_ID}`)
 				.send(updateBookBody);
 
 			expect(response.status).toBe(HttpStatus.OK);
@@ -106,24 +136,52 @@ describe("books", async () => {
 				data: { ...DEFAULT_BOOK, title: updateBookBody.title },
 			});
 		});
+
+		it("Should get 404 if book not found", async () => {
+			const updateBookBody = {
+				title: "novo titulo",
+			};
+
+			const response = await request(app.getHttpServer())
+				.patch(`/books/${DEFAULT_ID}`)
+				.send(updateBookBody);
+
+			expect(response.status).toBe(HttpStatus.NOT_FOUND);
+		});
 	});
 
 	describe("/DELETE books/:id", () => {
+		it("Should return 400 if id not is valid", async () => {
+			const response = await request(app.getHttpServer()).get("/books/id");
+
+			expect(response.status).toBe(HttpStatus.BAD_REQUEST);
+		});
+
 		it("Should delete book successfully", async () => {
 			await insertBookOnDb(DEFAULT_BOOK);
 
-			const response = await request(app.getHttpServer()).delete("/books/id");
+			const response = await request(app.getHttpServer()).delete(
+				`/books/${DEFAULT_ID}`,
+			);
 
 			expect(response.status).toBe(HttpStatus.OK);
 			expect(response.body).toStrictEqual({
 				data: DEFAULT_BOOK,
 			});
 		});
+
+		it("Should get 404 if book not found", async () => {
+			const response = await request(app.getHttpServer()).delete(
+				`/books/${DEFAULT_ID}`,
+			);
+
+			expect(response.status).toBe(HttpStatus.NOT_FOUND);
+		});
 	});
 });
 
 const DB_NAME = "sqlite-test.db";
-const DEFAULT_ID = "id";
+const DEFAULT_ID = "5eb8c0e0-b43d-4d1f-b75b-ef1ebbef5a79";
 const DEFAULT_BOOK = {
 	id: DEFAULT_ID,
 	title: "titulo",
