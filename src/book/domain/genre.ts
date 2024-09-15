@@ -20,8 +20,8 @@ export class Genre extends ValueObject {
 			throw new DomainError("Genre must to be a string");
 		}
 
-		if (!length(name, 1, 255)) {
-			throw new DomainError("Genre must have at least 1 char and 255 in max");
+		if (!length(name, 3, 255)) {
+			throw new DomainError("Genre must have at least 3 char and 255 in max");
 		}
 	}
 }

@@ -15,7 +15,7 @@ describe("Author", () => {
 
 	it("Should return a DomainError if name not is string", () => {
 		//@ts-ignore
-		const test = () => new Author(12912192);
+		const test = () => Author.create(12912192);
 
 		expect(test).toThrowError(new DomainError("Author must to be a string"));
 	});
@@ -31,5 +31,11 @@ describe("Author", () => {
 		expect(test2).toThrowError(
 			new DomainError("Author must have at least 3 char and 255 in max"),
 		);
+	});
+
+	it("Should create a Author successfully", () => {
+		const result = Author.create("Carlinhos");
+
+		expect(result.value).toBe("Carlinhos");
 	});
 });

@@ -5,20 +5,26 @@ import { Title } from "@/book/domain/title";
 import { Year } from "@/book/domain/year";
 import type { UpdateBookBody } from "@/book/dtos";
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import Database from "better-sqlite3";
 import { eq } from "drizzle-orm";
 import {
 	type BetterSQLite3Database,
 	drizzle,
 } from "drizzle-orm/better-sqlite3";
+import type { DrizzleLocalConfig } from "./config";
 import * as schema from "./schema";
 
 @Injectable()
 export class DrizzleBookRepository {
 	private readonly db: BetterSQLite3Database<typeof schema>;
 
-	constructor() {
-		const connection = new Database("sqlite.db");
+	constructor(
+		private readonly configService: ConfigService<DrizzleLocalConfig>,
+	) {
+		const path = this.configService.get("DB_PATH", "sqlite.db");
+
+		const connection = new Database(path);
 
 		this.db = drizzle(connection, { schema });
 	}

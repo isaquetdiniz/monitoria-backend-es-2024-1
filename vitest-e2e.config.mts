@@ -3,16 +3,16 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
 	test: {
-		include: ["**/*.e2e-spec.ts"],
 		globals: true,
-		alias: {
-			"@/*": "src/*",
-		},
 		root: "./",
+		include: ["**/*.e2e-spec.ts"],
+		alias: {
+			"@/": new URL("./src/", import.meta.url).pathname,
+		},
 	},
 	resolve: {
 		alias: {
-			"@/*": "src/*",
+			"@/": new URL("./src/", import.meta.url).pathname,
 		},
 	},
 	plugins: [swc.vite()],
