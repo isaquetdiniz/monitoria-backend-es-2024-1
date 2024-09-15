@@ -1,6 +1,6 @@
 import { unlink } from "node:fs/promises";
 import { books } from "@/libs/drizzle/schema";
-import { HttpStatus, INestApplication } from "@nestjs/common";
+import { HttpStatus, type INestApplication } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Test } from "@nestjs/testing";
 import Database from "better-sqlite3";
